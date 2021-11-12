@@ -29,7 +29,7 @@ function UserNav(props) {
       <Navbar.Text className="font-weight-bold mx-3">
         Welcome, Guest
       </Navbar.Text>
-      <Nav.Link as={Link} to="/login" href="/login">Sign in</Nav.Link>
+      <Nav.Link as={Link} to="/" href="/">Sign in</Nav.Link>
       <Nav.Link as={Link} to="/register" href="/register">Register</Nav.Link>
     </>
   )
