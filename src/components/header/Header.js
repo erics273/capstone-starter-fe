@@ -4,11 +4,14 @@ import { Link, withRouter } from 'react-router-dom';
 import UserNav from './UserNav';
 
 function Header(props) {
-
+  let homeLink = "/"
+  if(props.isAuthenticated){
+    homeLink="/map"
+  }
   return (
     <div className="Navbar mb-3">
       <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
-        <Navbar.Brand as={Link} to="/">Capstone React FE</Navbar.Brand>
+        <Navbar.Brand as={Link} to={homeLink}>Capstone React FE</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav activeKey={props.location.pathname} className="ml-auto">
