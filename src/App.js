@@ -1,11 +1,10 @@
 import { Switch, Route } from "react-router-dom";
 
-import Home from "./pages/home/Home";
-import Protected from "./pages/protected/Protected";
 import Login from "./pages/login/Login";
 import NotFound from "./pages/notFound/NotFound";
 import Register from "./pages/register/Register";
 import UpdateUser from "./pages/updateUser/UpdateUser";
+import Map from "./pages/map/map";
 
 function App() {
   return (
@@ -14,11 +13,6 @@ function App() {
         <Route
           exact
           path="/"
-          component={Home}
-        />
-        <Route
-          exact
-          path="/login"
           component={Login}
         />
         <Route
@@ -33,8 +27,8 @@ function App() {
         />
         <Route
           exact
-          path="/protected"
-          component={Protected}
+          path="/map"
+          component={Map}
         />
         <Route
           exact
