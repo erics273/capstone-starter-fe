@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import mustBeAuthenticated from "../../redux/hoc/mustBeAuthenticated";
 import Header from "../../components/header/Header";
 import GoogleMapReact from 'google-map-react';
-//import { Map, GoogleApiWrapper } from 'google-maps-react';
+import Table from 'react-bootstrap/Table';
 
 //TODO: Turn the logic into a component
 
@@ -19,6 +19,79 @@ class Map extends Component {
         this.getHubs()
         this.getClinics()
     }
+
+    searchByClinics = (searchString) => {
+        const apiURL = "http://localhost:5000"
+
+   
+        let query = "";
+
+        if(searchString){
+            query = `?searchTerm=${searchString}`
+                }
+     
+        
+      
+
+        fetch(`${apiURL}/api/clinics/${query}`)
+        .then((response) => response.json())
+        //on success of turnig the response into JSON (data we can work with), lets add that data to state
+        .then((data) => {
+            this.setState({
+                clinics: data
+            });
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
+    }
+
+    searchByHubs = (searchString) => {
+        const apiURL = "http://localhost:5000"
+
+   
+        let query = "";
+
+        if(searchString){
+            query = `?searchTerm=${searchString}`
+                }
+     
+        
+      
+
+        fetch(`${apiURL}/api/hubs/${query}`)
+        .then((response) => response.json())
+        //on success of turnig the response into JSON (data we can work with), lets add that data to state
+        .then((data) => {
+            this.setState({
+                hubs: data
+            });
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
+    }
+
+    // handleChangeClinics = (event) => {
+    //     this.searchByClinics(event.target.value)
+    // }
+
+    // handleChangeHubs = (event) => {
+    //     this.searchByHubs(event.target.value)
+    // }
+
+    handleChangeHubsClinics = (event) => {
+        this.searchByHubs(event.target.value)
+        this.searchByClinics(event.target.value)
+       
+    }
+
+    
+
+
+
 
     getHubs = () => {
         //fetch request to the API that gets all the clinics.
@@ -62,8 +135,57 @@ class Map extends Component {
 
     render() {
 
-        const PinComponent = ({ text, pinColor }) => <div className="marker" style={{ backgroundColor: pinColor, cursor: 'pointer' }}>{text}</div>;
+        const clinicTable = this.state.clinics.map((clinic, index) => {
+            return (
+                <tr key={index}>
+                  
+                   <td>{clinic.clinic}</td>
+                   <td>{clinic.doctor}</td>
+                   <td>{clinic.specialty}</td>
+                    <td>{clinic.phoneNumber}</td> 
+                    <td>{clinic.faxNumber}</td>
+                    <td>{clinic.address}</td>
+                    <td>{clinic.website}</td>
+                    <td>{clinic.area}</td>
+                    <td>{clinic.alternatePhoneNumbers}</td>
+                    <td>{clinic.caseCoordinator}</td>
+                    <td>{clinic.email}</td>             
+                    <td>{clinic.notes}</td>     
+                    
 
+                   
+                   
+                </tr>
+            );
+        });
+
+        const hubTable = this.state.hubs.map((hub, index) => {
+            return (
+                <tr key={index}>
+                  
+                   <td>{hub.name}</td>
+                   <td></td>
+                   <td></td>
+                    <td></td> 
+                    <td></td>
+                    <td>{hub.address}</td>
+                    <td></td>
+                    <td>{hub.upsRiskManager}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>             
+                    <td></td>     
+                    
+
+                   
+                   
+                </tr>
+            );
+        });
+       
+
+        const PinComponent = ({ text, pinColor }) => <div className="marker" style={{ backgroundColor: pinColor, cursor: 'pointer' }}>{text}</div>;
+        
         return (
             <div className="Map">
                 <Header isAuthenticated={this.props.isAuthenticated} />
@@ -71,7 +193,7 @@ class Map extends Component {
                     <h2>Map Page</h2>
                 </div>
                 {/*Adding Google Map React page */}
-                <div style={{ height: '90vh', width: '100%' }}>
+                <div style={{ height: '80vh', width: '80%' }}>
                     <GoogleMapReact
                         bootstrapURLKeys={{ key: process.env.REACT_APP_GMAPS_KEY }}
                         defaultCenter={{
@@ -81,9 +203,12 @@ class Map extends Component {
                         defaultZoom={11}
                     >
 
+                     
+
+              
                         {this.state.hubs.map((hub) => {
                             console.log(hub);
-                            let color = "green";
+                            let color = "black";
 
                             return (
                                 <PinComponent
@@ -99,19 +224,19 @@ class Map extends Component {
                             let color = "";
                             switch (clinic.area) {
                                 case "Andy":
-                                    color = "green"
-                                    break;
-                                case "Sylvia":
-                                    color = "yellow"
-                                    break;
-                                case "Barbara":
                                     color = "blue"
                                     break;
+                                case "Sylvia":
+                                    color = "green"
+                                    break;
+                                case "Barbara":
+                                    color = "red"
+                                    break;
                                 case "Edgar":
-                                    color = "purple"
+                                    color = "yellow"
                                     break;
                                 default:
-                                    color = "red"
+                                    color = "black"
                             }
                             return (
                                 <PinComponent
@@ -124,13 +249,71 @@ class Map extends Component {
                         })}
 
 
+
                     </GoogleMapReact>
-                </div>
-                <div><p>
-                    Clinic Data: {JSON.stringify(this.state.clinics)}
-                    {/* Hub Data: {JSON.stringify(this.state.hubs)} */}
-                </p></div>
+                    
+            <div className="searchMap">
+                <br/>
+                {/* Search by Clinic: <input type="text" onChange={this.handleChangeClinics} />
+                <br/>
+                Search by Hub: <input type="text" onChange={this.handleChangeHubs} /> */}
+                Search: <input type="text" onChange={this.handleChangeHubsClinics} />
+              
+
+
+              
+                <Table striped bordered hover size>
+                    <thead>
+                        <tr >
+                            <th>Clinic Name</th>
+                            <th>Doctor Name</th>
+                            <th>Specialty</th>
+                            <th>Phone Number</th>
+                            <th>Fax Number</th>
+                            <th>Address</th>
+                            <th>Website</th>
+                            <th>Risk Manager</th>
+                            <th>Alternate Phone # </th>
+                            <th>Case Coordinator</th>
+                            <th>E-mail</th>
+                            <th>Notes</th>
+
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {clinicTable}
+                    </tbody>
+                </Table>
+
+
+                {this.state.clinics.map((clinic, index) => {
+                   
+               
+                  
+                   return (
+                       <div>
+                        
+                   
+                            {/* Clinic Name: {clinic.clinic}
+                            <br/>
+                            Risk Manager: {clinic.area}
+                            <br/>
+                            Risk address: {clinic.address} */}
+
+                       </div>
+                        //JSON.stringify(this.state.clinics)
+                     )
+                })}
             </div>
+        )
+                                
+
+                </div>
+
+            </div>
+
+            
         );
     }
 }
