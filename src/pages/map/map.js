@@ -163,7 +163,7 @@ class Map extends Component {
             return (
                 <tr key={index}>
                   
-                   <td>{hub.name}</td>
+                   <td>{hub.upsHubName}</td>
                    <td></td>
                    <td></td>
                     <td></td> 
@@ -282,7 +282,8 @@ class Map extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {clinicTable}
+                      {clinicTable}
+                      {hubTable}
                     </tbody>
                 </Table>
 
