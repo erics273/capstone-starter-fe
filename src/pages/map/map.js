@@ -21,7 +21,7 @@ class Map extends Component {
   }
 
   searchByClinics = (searchString) => {
-    const apiURL = "http://localhost:5000"
+    const apiURL = process.env.REACT_APP_API_URL
 
     let query = "";
 
@@ -44,7 +44,7 @@ class Map extends Component {
   }
 
   searchByHubs = (searchString) => {
-    const apiURL = "http://localhost:5000"
+    const apiURL = process.env.REACT_APP_API_URL
 
     let query = "";
 
@@ -82,8 +82,9 @@ class Map extends Component {
 
 
   getHubs = () => {
+    const apiURL = process.env.REACT_APP_API_URL
     //fetch request to the API that gets all the clinics.
-    fetch("http://localhost:5000/api/hubs")
+    fetch(`${apiURL}/api/hubs`)
       .then(handleResponseErrors)
       //on success of the fetch request, turn the response that came back into JSON
       .then((response) => response.json())
@@ -101,8 +102,9 @@ class Map extends Component {
   }
 
   getClinics = () => {
+    const apiURL = process.env.REACT_APP_API_URL
     //fetch request to the API that gets all the clinics.
-    fetch("http://localhost:5000/api/clinics")
+    fetch(`${apiURL}/api/clinics`)
       .then(handleResponseErrors)
       //on success of the fetch request, turn the response that came back into JSON
       .then((response) => response.json())

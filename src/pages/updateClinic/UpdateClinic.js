@@ -85,17 +85,17 @@ class UpdateClinic extends Component {
 
   //run when the form is submitted
   handleSubmit = (event) => {
-
+    const apiURL = process.env.REACT_APP_API_URL
     //prevent the form from refreshing the page
     event.preventDefault();
 
     const clinicId = this.props.match.params.id;
 
-    const newClinicData = { ...this.state.formData }
+    // const newClinicData = { ...this.state.formData }
 
     //use fetch to make a POST request with out Data from state that has been populated from
     //the data in the form
-    fetch(`http://localhost:5000/api/clinics/${clinicId}`, {
+    fetch(`${apiURL}/api/clinics/${clinicId}`, {
       method: "PUT", //make sure whe set our method to POST when creating records
       headers: {
         'content-type': 'application/json' //make sure we set the content-type headers so the API knows it is recieveing JSON data
