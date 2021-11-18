@@ -57,7 +57,8 @@ class Register extends Component {
         .then((data) => {
             const message = "Registration successful! Please sign-in"
             //programatically redirect to another route on success
-            this.props.history.push(`/login?message=${message}`)
+            alert(message)
+            this.props.history.push(`/map`)
         })
         .catch(e => console.log(e.message)) //console.log any errors if the previous steps fail
 
