@@ -5,6 +5,8 @@ import GoogleMapReact from 'google-map-react';
 import Table from 'react-bootstrap/Table';
 import { handleResponseErrors } from "../../utils/handleResponseErrors";
 
+import { Link } from "react-router-dom";
+
 //TODO: Turn the logic into a component
 
 class Map extends Component {
@@ -131,23 +133,26 @@ class Map extends Component {
 
     const clinicTable = this.state.clinics.map((clinic, index) => {
       return (
-        <tr key={index}>
 
+        <tr key={index}>
           <td>{clinic.clinic}</td>
           <td>{clinic.doctor}</td>
           <td>{clinic.specialty}</td>
           <td>{clinic.phoneNumber}</td>
           <td>{clinic.faxNumber}</td>
           <td>{clinic.address}</td>
-          <td>{clinic.website}</td>
+          <td><Link to={{ pathname: `https://${clinic.website}` }} target="_blank">{clinic.website}</Link></td>
           <td>{clinic.area}</td>
-          <td>{clinic.alternatePhoneNumbers}</td>
+          {/* <td>{clinic.alternatePhoneNumbers}</td>
           <td>{clinic.caseCoordinator}</td>
-          <td>{clinic.email}</td>
+          <td>{clinic.email}</td> */}
           <td>{clinic.notes}</td>
-          <td>Clinic</td>
+          <td>
+            <Link to={`/update/clinic/${clinic._id}`}>View/Update</Link> &nbsp;&nbsp;
+          </td>
 
         </tr>
+
       );
     });
 
@@ -163,11 +168,11 @@ class Map extends Component {
           <td>{hub.address}</td>
           <td></td>
           <td>{hub.upsRiskManager}</td>
+          {/* <td></td>
+          <td></td>
+          <td></td> */}
           <td></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td>Hub</td>
 
         </tr>
       );
@@ -175,24 +180,24 @@ class Map extends Component {
 
 
 
-    const ClinicPin = ({ text, pinColor }) => 
-      <div className="marker" style={{ 
-          backgroundImage: `url(./plus-${pinColor}-24.png)`,
-          // backgroundColor: pinColor, 
-          cursor: 'pointer' 
-        }}
+    const ClinicPin = ({ text, pinColor }) =>
+      <div className="marker" style={{
+        backgroundImage: `url(./plus-${pinColor}-24.png)`,
+        // backgroundColor: pinColor, 
+        cursor: 'pointer'
+      }}
         onClick={this.handleInfoClick} >
-          {text}
+        {text}
       </div>;
 
-    const HubPin = ({ text, pinColor }) => 
-      <div className="marker" style={{ 
-          backgroundImage: `url(./pin-${pinColor}-24.png)`,
-          // backgroundColor: pinColor, 
-          cursor: 'pointer' 
-        }}
+    const HubPin = ({ text, pinColor }) =>
+      <div className="marker" style={{
+        backgroundImage: `url(./pin-${pinColor}-24.png)`,
+        // backgroundColor: pinColor, 
+        cursor: 'pointer'
+      }}
         onClick={this.handleInfoClick} >
-          {text}
+        {text}
       </div>;
 
 
@@ -200,10 +205,10 @@ class Map extends Component {
       <div className="Map">
         <Header isAuthenticated={this.props.isAuthenticated} />
         <div className="container">
-          <h2>Map Page</h2>
+          {/* <h2>Map Page</h2> */}
         </div>
         {/*Adding Google Map React page */}
-        <div style={{ height: '80vh', width: '80%' }}>
+        <div style={{ height: '60vh', width: '90%', margin: 'auto' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: process.env.REACT_APP_GMAPS_KEY }}
             defaultCenter={{
@@ -235,7 +240,7 @@ class Map extends Component {
               }
 
               return (
-                <HubPin 
+                <HubPin
                   lat={hub.latitude}
                   lng={hub.longitude}
                   text={hub.upsHubName}
@@ -272,38 +277,36 @@ class Map extends Component {
               )
             })}
           </GoogleMapReact>
+        </div>
 
-          <div className="searchMap">
-            <br />
-            {/* Search by Clinic: <input type="text" onChange={this.handleChangeClinics} />
-                <br/>
-                Search by Hub: <input type="text" onChange={this.handleChangeHubs} /> */}
-            Search: <input type="text" onChange={this.handleChangeHubsClinics} />
-
-            <Table striped bordered hover size>
-              <thead>
-                <tr >
-                  <th>Facility Name</th>
-                  <th>Doctor Name</th>
-                  <th>Specialty</th>
-                  <th>Phone Number</th>
-                  <th>Fax Number</th>
-                  <th>Address</th>
-                  <th>Website</th>
-                  <th>Risk Manager</th>
-                  <th>Alternate Phone # </th>
-                  <th>Case Coordinator</th>
-                  <th>E-mail</th>
-                  <th>Notes</th>
-                  <th>Clinic/Hub</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clinicTable}
-                {hubTable}
-              </tbody>
-            </Table>
-          </div>
+        <div className="searchMap mb-3 mt-3 container-fluid">
+          <input style={{width: "300px"}} type="text" onChange={this.handleChangeHubsClinics} placeholder="Search" />
+          <br />
+        </div>
+        <div className="container-fluid">
+          <Table striped bordered hover size className="table-style">
+            <thead>
+              <tr>
+                <th>Facility Name</th>
+                <th>Doctor Name</th>
+                <th>Specialty</th>
+                <th>Phone Number</th>
+                <th>Fax Number</th>
+                <th>Address</th>
+                <th>Website</th>
+                <th>Risk Manager</th>
+                {/* <th>Alternate Phone # </th>
+                <th>Case Coordinator</th>
+                <th>E-mail</th> */}
+                <th>Notes</th>
+                <th>Manage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clinicTable}
+              {hubTable}
+            </tbody>
+          </Table>
         </div>
       </div>
     );

@@ -1,11 +1,11 @@
 //import the boostrap compents we will be using on this form
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
 
 function ClinicForm({ handleChange, handleSubmit, formData, isUpdate }) {
-
     return (
-        <div className="ClinicForm container">
+        <div className="ClinicForm container mb-3">
 
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="clinic">
@@ -67,9 +67,23 @@ function ClinicForm({ handleChange, handleSubmit, formData, isUpdate }) {
                     <Form.Control onChange={handleChange} value={formData.notes} type="text" placeholder="notes" />
                 </Form.Group>
 
+                <Form.Group controlId="latitude">
+                    <Form.Label><strong>Latitude:</strong></Form.Label>
+                    <Form.Control onChange={handleChange} value={formData.latitude} type="text" placeholder="latitude" />
+                </Form.Group>
+
+                <Form.Group controlId="longitude">
+                    <Form.Label><strong>Longitude:</strong></Form.Label>
+                    <Form.Control onChange={handleChange} value={formData.longitude} type="text" placeholder="longitude" />
+                </Form.Group>
+
                 <Button variant="primary" type="submit">
                     Submit
-                </Button>
+                </Button> 
+                &nbsp;&nbsp;&nbsp;
+                <Link to={`/map`}>
+                  <Button variant="secondary" value="Close">Close</Button>
+                </Link>
             </Form>
         </div>
     )
