@@ -31,6 +31,7 @@ function UserNav(props) {
       </Navbar.Text>
       <Nav.Link as={Link} to="/" href="/">Sign in</Nav.Link>
       <Nav.Link as={Link} to="/register" href="/register">Register</Nav.Link>
+      <Nav.Link as={Link} to="/about" href="/about">About</Nav.Link>
     </>
   )
   if (props.isAuthenticated) {
@@ -41,6 +42,7 @@ function UserNav(props) {
         </Navbar.Text>
         <Nav.Link as={Link} to={`/updateuser/${props.auth.email}`} href={`/updateuser/${props.auth.email}`}> Edit Profile</Nav.Link>
         <Nav.Link onClick={handleSignOut}>Sign Out</Nav.Link>
+        <Nav.Link as={Link} to="/about" href="/about">About</Nav.Link>
       </>
     )
   }

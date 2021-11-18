@@ -6,6 +6,7 @@ import Register from "./pages/register/Register";
 import UpdateUser from "./pages/updateUser/UpdateUser";
 import Map from "./pages/map/map";
 import UpdateClinic from './pages/updateClinic/UpdateClinic';
+import About from './pages/about/About';
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
           component={Map}
         />
          <Route
+          exact
+          path="/about"
+          component={About}
+        />
+            <Route
           exact
           path="/update/clinic/:id"
           component={UpdateClinic}
