@@ -10,6 +10,7 @@ import { Redirect, withRouter } from "react-router-dom";
 import LoginForm from "../../components/loginForm/LoginForm";
 import Header from "../../components/header/Header";
 
+
 class Login extends Component {
 
     state = {
@@ -52,7 +53,7 @@ class Login extends Component {
         const flashMessage = params.get('message');
         if (this.state.success) {
             const redirect = params.get('redirect');
-            return <Redirect to={(redirect) ? redirect : "/protected"} />
+            return <Redirect to={(redirect) ? redirect : "/map"} />
         }
         return (
             <div className="LoginForm">
