@@ -133,7 +133,7 @@ class Map extends Component {
 
     const clinicTable = this.state.clinics.map((clinic, index) => {
       return (
-        
+
         <tr key={index}>
           <td>{clinic.clinic}</td>
           <td>{clinic.doctor}</td>
@@ -208,7 +208,7 @@ class Map extends Component {
           {/* <h2>Map Page</h2> */}
         </div>
         {/*Adding Google Map React page */}
-        <div style={{ height: '70vh', width: '90%', margin: 'auto' }}>
+        <div style={{ height: '60vh', width: '90%', margin: 'auto' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: process.env.REACT_APP_GMAPS_KEY }}
             defaultCenter={{
@@ -217,7 +217,7 @@ class Map extends Component {
             }}
             defaultZoom={11}
           >
-        
+
 
             {this.state.hubs.map((hub) => {
               // console.log(hub);
@@ -277,17 +277,14 @@ class Map extends Component {
               )
             })}
           </GoogleMapReact>
-          </div>
+        </div>
 
-          <div className="searchMap mb-3">
-            <br />
-            {/* Search by Clinic: <input type="text" onChange={this.handleChangeClinics} />
-                <br/>
-                Search by Hub: <input type="text" onChange={this.handleChangeHubs} /> */}
-            Search: <input type="text" onChange={this.handleChangeHubsClinics} />
-            <br />
-          </div>
-          <Table striped bordered hover size>
+        <div className="searchMap mb-3 mt-3 container-fluid">
+          <input style={{width: "300px"}} type="text" onChange={this.handleChangeHubsClinics} placeholder="Search" />
+          <br />
+        </div>
+        <div className="container-fluid">
+          <Table striped bordered hover size className="table-style">
             <thead>
               <tr>
                 <th>Facility Name</th>
@@ -310,8 +307,8 @@ class Map extends Component {
               {hubTable}
             </tbody>
           </Table>
-
         </div>
+      </div>
     );
   }
 }

@@ -124,7 +124,7 @@ class UpdateClinic extends Component {
           {this.state.successMessage && <Alert variant="info">{this.state.successMessage}</Alert>}
         </div>
 
-        <h3 className="text-center" >Update Your Profile</h3>
+        <h3 className="text-center" >Update Clinic</h3>
         <ClinicForm
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
