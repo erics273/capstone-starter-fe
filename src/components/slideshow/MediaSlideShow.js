@@ -12,7 +12,7 @@ class MediaSlideshow extends Component {
     componentDidMount() {
         let userFavorites = [];
         let tasteDiveResults = [];
-        fetch(`${process.env.REACT_APP_API_URL}/api/media/getAllMedia`)
+        fetch(`${process.env.REACT_APP_API_URL}/api/media/getMediaForUser/${getUserEmail()}`)
             //on success of the fetch request, turn the response that came back into JSON
             .then((response) => response.json())
             //on success of turnig the response into JSON (data we can work with), lets add that data to state
@@ -23,7 +23,12 @@ class MediaSlideshow extends Component {
                     userFavorites.push(mediaItem.mediaName)
                 })
             })
-        
+            ////////////////////////////////////Steve////////////////////////////////////////////////////
+            //The below should work for the grid cards as well, it calls out tasteDive based off what
+            //Was returned from our backend for the user's favorites. 
+            //        let userFavorites = []; <--- Items from our backend are added to this.
+            //        let tasteDiveResults = []; <---- Items from tasteDive.
+            //
             .then(() => userFavorites.forEach((favorite) => {
                 console.log(`${process.env.REACT_APP_API_URL}/api/tasteDive/related?MediaName=${favorite}&info=1&limit=100&verbose=1`)
                 fetch(`${process.env.REACT_APP_API_URL}/api/tasteDive/related?MediaName=${favorite}`, {
