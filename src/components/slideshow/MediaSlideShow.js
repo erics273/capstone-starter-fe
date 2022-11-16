@@ -2,7 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import React, { Component } from "react";
 import tasteDiveGetRelatedMedia from "../../utils/tasteDiveGetRelatedMedia"
 import {tasteDiveResults} from "../../utils/tasteDiveResults"
-import YouTube from "react-youtube";
+import YoutubeEmbed from './YoutubeEmbed';
 class MediaSlideshow extends Component {
 
     state = {
@@ -36,7 +36,9 @@ class MediaSlideshow extends Component {
                         let parsedData = JSON.parse(apiData.body)
                         console.log(parsedData)
                         parsedData.Similar.Results.forEach((result) => {
-                            tasteDiveResults.push(result)
+                            if(result.yID) {
+                                tasteDiveResults.push(result)
+                            }
                             
                         })
                         this.setState({data: tasteDiveResults})
@@ -51,20 +53,13 @@ class MediaSlideshow extends Component {
     render() {
         return (
             <div className="Slideshow container mb-3">
-                <Carousel variant="dark">
+                <Carousel variant="dark" interval={null}>
                     {this.state.data.map((media, idx) => (
                     <Carousel.Item key={idx}>
-                        <img
-                            className="d-block w-100"
-                            src="https://via.placeholder.com/800x400"
-                            alt="First slide"
-                        /> 
+                        <YoutubeEmbed embedId={media.yID} />
+                        
                         <Carousel.Caption>
                             <h5>{media.Name}</h5>
-                            <h4>{media.wUrl}</h4>
-                            <h3>{media.yUrl}</h3>
-                            <h2>{media.yID}</h2>
-                            <p>{media.wTeaser}</p>
 
                         </Carousel.Caption>
                     </Carousel.Item>))}
